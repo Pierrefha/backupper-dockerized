@@ -1,8 +1,12 @@
 # backupper-dockerized
 
-## What does this do?
+## About
 Automaticly, periodically creates a local backup of files that are stored on a
 remote server.
+
+## Prerequesites
+- docker-compose && docker installed
+- remote server configured to allow ssh connections with the key you will be using
 
 ## Quick start
 - adapt the values inside .env file. You need to adapt:
