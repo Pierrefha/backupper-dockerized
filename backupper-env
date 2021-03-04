@@ -1,0 +1,15 @@
+# ip address of your remote server
+REMOTE_IP=45.142.176.207
+# ssh port that is open on remote server
+SSH_PORT=40022
+# ssh username for your server, default backupper
+SSH_USERNAME=backupper
+# ssh private key filename; the public key for this private key will obviously
+# have to be added to the remote servers authorized_keys file.
+SSH_KEYNAME=pi-local-box-4096
+# path on remote machine pointing to the files that shall be backed up to this
+# local machine
+SOURCE_PATH=/var/dockerdata-backups
+# number of copies you want to store. will require x+1 space while downloading
+# the lastest backup!
+MAX_NUMBER_OF_BACKUPS=2

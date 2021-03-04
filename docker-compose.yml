@@ -1,0 +1,29 @@
+#
+# copies remote backups into local box using scp
+#
+version: "3.8"
+
+services:
+    master-backupper:
+        env_file:
+            - backupper-env
+        # don't use swarm mode for now
+        # deploy:
+        #     replicas: 1
+        image: ${COMPOSE_PROJECT_NAME}-backupper
+        container_name: backupper
+        # makes sure container restarts as soon as it's going down for some
+        # reason.
+        restart: always
+        build:
+            context: .
+            dockerfile: backupper-dockerfile
+            args:
+                TARGET_PATH: ${TARGET_PATH}
+                ALPINE_VERSION: ${ALPINE_VERSION}
+                TZ: ${TZ}
+        volumes:
+            - ${HOST_BACKUP_DATA_PATH}:${TARGET_PATH}
+            # MAYBE(pierre): don't share all ssh keys with container.
+            # could use sshconfig file and mount to other dir.
+            - ${PATH_TO_SSH_DIR}:/root/.ssh/:ro

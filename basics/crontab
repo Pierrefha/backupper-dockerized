@@ -1,0 +1,7 @@
+# https://linuxhandbook.com/crontab/
+# run backup every day at 03:50 am. this task will be concatenated into the
+# default crontabs. IF we want to adapt the timing, have to do it here YET!
+# MAYBE: set env for h m dow mow etc and enter them here!
+50       3       *       *       *       run-parts /etc/periodic/ourjobs > /dev/stdout
+
+

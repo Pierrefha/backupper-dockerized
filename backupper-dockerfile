@@ -1,0 +1,21 @@
+ARG ALPINE_VERSION
+FROM alpine:$ALPINE_VERSION
+LABEL maintainer="Pierre Dahmani <business@pierrefhapp.dev>"
+
+ARG TZ
+ARG TARGET_PATH
+ENV TZ=$TZ TARGET_PATH=$TARGET_PATH
+
+ADD ./scripts /setup/scripts
+ADD ./basics /setup/basics
+
+RUN DEBIAN_FRONTEND=noninteractive apk add --no-cache -qq tzdata openssh && \
+    chmod +x -R /setup/scripts && \
+    mkdir -p /etc/periodic/ourjobs && \
+    # crontabs will not be executed if they have .sh ending!
+    cp /setup/scripts/create-backup.sh /etc/periodic/ourjobs/create-backup && \
+    cat /setup/basics/crontab >> /etc/crontabs/root
+
+# start crond and follow stdout. make sure to pipe crond stuff to stdout for
+# this stuff to work.
+CMD ["crond", "-f", "-l", "2"]
